@@ -16,9 +16,10 @@ class GameScene: SKScene {
     let coinLabel = SKLabelNode()
     let tapLabel = SKLabelNode()
     var systemMessageLabel = SKLabelNode()
+    var timeLabel = SKLabelNode()
     var coins: Int = 0
     var tapCount: Int = 0
-    
+    var timeCount: Int = 0
     /* Decision-making structures -> Choices:
      - Generate $+ when away
      - Generate $+ from own taps
@@ -28,15 +29,40 @@ class GameScene: SKScene {
     
     /// Initial Game Setup:
     func gameSetup(){
+        
+        // DEBUG:
+        print("Scene size: \(String(describing: scene?.size))") // Scene size: Optional((750.0, 1334.0))
+        print("Frame size: \(String(describing: view?.frame.size))") // Frame size: Optional((320.0, 480.0))
+        print("Bounds size: \(String(describing: view?.bounds.size))") // Bounds size: Optional((320.0, 480.0))
+        
         tapCount = 0
+        timeCount = 0
         coins = 100
         buttonLabel.text = "Tap me!"
         tapLabel.text = "\(tapCount)"
-        coinLabel.text = "\(coins)"
+        coinLabel.text = "$\(coins)"
+        timeLabel.text = "\(timeCount)"
         
         systemMessageLabel.isHidden = true
         systemMessageLabel.text = ""
         
+        startTimer()
+        
+    }
+    
+    func startTimer(){
+        
+        let wait = SKAction.wait(forDuration: 1.0)
+        let run = SKAction.run( { self.counter() } )
+        let sequence = SKAction.sequence([wait, run])
+
+        timeLabel.run(SKAction.repeatForever(sequence))
+    }
+    
+    func counter(){
+        timeCount += 1
+        // DEBUG
+        //print(timeCount)
     }
     
     override func didMove(to view: SKView) {
@@ -70,6 +96,16 @@ class GameScene: SKScene {
         systemMessageLabel.fontColor = UIColor.white
         self.addChild(systemMessageLabel)
         
+        /// TIMER logic:
+        //timeLabel.position = CGPoint(x: self.frame.minX, y: self.frame.maxY) // TopLeft
+        //print("DEBUG: \(self.frame.minX) , \(self.frame.maxY)") // -375.0 , 667.0
+        // TIL: The center of the screen is 0,0 in SpriteKit? Not the bottomleft corner?
+        timeLabel.position = CGPoint(x: -320, y: 480) // TopLeft
+        timeLabel.fontSize = 72.0
+        timeLabel.fontColor = UIColor.yellow
+        self.addChild(timeLabel)
+
+        
     }
     /// Called when the finger is no longer touching the screen (  lifted )
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -83,7 +119,7 @@ class GameScene: SKScene {
                     tapCount += 1
                     coins -= 5
                     tapLabel.text = "\(tapCount)"
-                    coinLabel.text = "\(coins)"
+                    coinLabel.text = "$\(coins)"
                     // Debug:
                     //print(count)
                 } else {
@@ -99,6 +135,6 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-    
+        timeLabel.text = "\(timeCount)"
     }
 }
