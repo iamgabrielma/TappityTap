@@ -31,9 +31,9 @@ class GameScene: SKScene {
     func gameSetup(){
         
         // DEBUG:
-        print("Scene size: \(String(describing: scene?.size))") // Scene size: Optional((750.0, 1334.0))
-        print("Frame size: \(String(describing: view?.frame.size))") // Frame size: Optional((320.0, 480.0))
-        print("Bounds size: \(String(describing: view?.bounds.size))") // Bounds size: Optional((320.0, 480.0))
+        Debugger.debug(active: false, message: "Scene Size", item: scene!.size) // Scene size: Optional((750.0, 1334.0))
+        Debugger.debug(active: false, message: "Frame Size", item: view?.frame.size) // Frame size: Optional((320.0, 480.0))
+        Debugger.debug(active: false, message: "Bounds Size", item: view?.bounds.size) // Bounds size: Optional((320.0, 480.0))
         
         tapCount = 0
         timeCount = 0
@@ -60,7 +60,8 @@ class GameScene: SKScene {
     }
     
     func counter(){
-        timeCount += 1
+        timeCount += 1 // +1 second every second
+        tapCount += 1 // +1 automatic tap every second
         // DEBUG
         //print(timeCount)
     }
@@ -72,7 +73,7 @@ class GameScene: SKScene {
         button = SKSpriteNode(color: UIColor.systemRed, size: CGSize(width: 100.00, height: 44.00))
         button.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         self.addChild(button)
-        #warning("buttonLabel needs fixing and to appear properly with the button sprite")
+        
         buttonLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY) // CenterCenter
         buttonLabel.fontSize = 32.0
         buttonLabel.fontColor = UIColor.white
@@ -117,7 +118,8 @@ class GameScene: SKScene {
                 
                 if coins >= 5 {
                     tapCount += 1
-                    coins -= 5
+                    //coins -= 5 // Removing this for the moment, tapping doesn't cost coins but the opposite:
+                    coins += 1
                     tapLabel.text = "\(tapCount)"
                     coinLabel.text = "$\(coins)"
                     // Debug:
@@ -136,5 +138,6 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         timeLabel.text = "\(timeCount)"
+        tapLabel.text = "\(tapCount)"
     }
 }
