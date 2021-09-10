@@ -25,8 +25,14 @@ class GameScene: SKScene {
     var coins: Int = 0
     //var tapCount: Int = 0
     var timeCount: Int = 0
+    #warning("SKMultilineLabel class does not allow to init the game")
+    // SpriteKit SKLabels do not accept multiline strings. Substituting SKLabel for SKMultilineLabel: https://gist.github.com/craiggrummitt/03bfa93c07e247ee9358
+    //let descriptionLabel: SKMultilineLabel = SKMultilineLabel(text:"", labelWidth: 0, pos: CGPoint(x: 0, y: 0))
     let descriptionLabel = SKLabelNode()
     var descriptions = [String:String]()
+    
+    let levelLabel = SKLabelNode()
+    var currentLevel: Int = 0
     /* Decision-making structures -> Choices:
      - Generate $+ when away
      - Generate $+ from own taps
@@ -43,7 +49,8 @@ class GameScene: SKScene {
         Debugger.debug(active: false, message: "Bounds Size", item: view?.bounds.size) // Bounds size: Optional((320.0, 480.0))
         
         descriptions = Constants.descriptions
-        //tapCount = 0
+        //tapCount =0
+        currentLevel = 0
         timeCount = 0
         coins = 100
         buttonLabel1.text = "Tap me 1!"
@@ -52,10 +59,17 @@ class GameScene: SKScene {
         //tapLabel.text = "\(tapCount)"
         coinLabel.text = "$\(coins)"
         timeLabel.text = "\(timeCount)"
-        descriptionLabel.text = "Description: \n"
+        levelLabel.text = "Level: \(currentLevel)"
+        
+        descriptionLabel.lineBreakMode = .byWordWrapping
         
         systemMessageLabel.isHidden = true
         systemMessageLabel.text = ""
+        
+        // MultiLineLabel:
+        //descriptionLabel.text = "Level: 0 \nDescription: Lorem Ipsum "
+        //descriptionLabel.labelWidth = Int(( self.frame.width / 3.0 ))
+        
         
         startTimer()
         
@@ -78,6 +92,15 @@ class GameScene: SKScene {
         //print(timeCount)
     }
     
+    func checkIfLevelUp(){
+        // Work in progress - Quick level up logic for debugging:
+        if coins >= 110 && coins < 111 {
+            currentLevel += 1
+        } else if coins >= 120 && coins < 121 {
+            currentLevel += 1
+        }
+    }
+    
     override func didMove(to view: SKView) {
         
         gameSetup()
@@ -85,34 +108,46 @@ class GameScene: SKScene {
         /// BUTTON 1 logic - Sprite node that will act as a button:
         button1 = SKSpriteNode(color: UIColor.systemRed, size: CGSize(width: 100.00, height: 44.00))
         button1.position = CGPoint(x: -320, y: -320) // BottomLeft
+        button1.zPosition = 1
         self.addChild(button1)
         
         /// BUTTON 2 logic - Sprite node that will act as a button:
         button2 = SKSpriteNode(color: UIColor.systemBlue, size: CGSize(width: 100.00, height: 44.00))
         button2.position = CGPoint(x: 0, y: -320) // BottomCenter
+        button2.zPosition = 1
         self.addChild(button2)
         
         /// BUTTON 3 logic - Sprite node that will act as a button:
         button3 = SKSpriteNode(color: UIColor.systemGreen, size: CGSize(width: 100.00, height: 44.00))
         button3.position = CGPoint(x: 320, y: -320) // BottomRight
+        button3.zPosition = 1
         self.addChild(button3)
         
         /// BUTTON 1 TEXT
-        buttonLabel1.position = CGPoint(x: button1.frame.midX, y: button1.frame.midY)
-        buttonLabel1.fontSize = 32.0
-        buttonLabel1.fontColor = UIColor.black
+        //buttonLabel1.position = CGPoint(x: button1.frame.midX, y: button1.frame.midY)
+        buttonLabel1.verticalAlignmentMode = .center
+        buttonLabel1.horizontalAlignmentMode = .center
+        buttonLabel1.zPosition = 2
+        buttonLabel1.fontSize = 20.0
+        buttonLabel1.fontColor = UIColor.white
         button1.addChild(buttonLabel1)
         
         /// BUTTON 2 TEXT
-        buttonLabel2.position = CGPoint(x: button2.frame.midX, y: button2.frame.midY)
-        buttonLabel2.fontSize = 32.0
-        buttonLabel2.fontColor = UIColor.black
+        //buttonLabel2.position = CGPoint(x: button2.frame.midX, y: button2.frame.midY)
+        buttonLabel2.verticalAlignmentMode = .center
+        buttonLabel2.horizontalAlignmentMode = .center
+        buttonLabel2.zPosition = 2
+        buttonLabel2.fontSize = 20.0
+        buttonLabel2.fontColor = UIColor.white
         button2.addChild(buttonLabel2)
         
         /// BUTTON 3 TEXT
-        buttonLabel3.position = CGPoint(x: button3.frame.midX, y: button3.frame.midY)
-        buttonLabel3.fontSize = 32.0
-        buttonLabel3.fontColor = UIColor.black
+        //buttonLabel3.position = CGPoint(x: button3.frame.midX, y: button3.frame.midY)
+        buttonLabel3.verticalAlignmentMode = .center
+        buttonLabel3.horizontalAlignmentMode = .center
+        buttonLabel3.zPosition = 2
+        buttonLabel3.fontSize = 20.0
+        buttonLabel3.fontColor = UIColor.white
         button3.addChild(buttonLabel3)
         
         /// TAP Label logic:
@@ -122,8 +157,17 @@ class GameScene: SKScene {
 //        tapLabel.fontColor = UIColor.white
 //        self.addChild(tapLabel)
         
+        /// LEVEL:
+        levelLabel.position = CGPoint(x: -200, y: 300) // Positioning here needs fixing, attached to label better
+        levelLabel.fontSize = 20.0
+        levelLabel.fontColor = UIColor.white
+        self.addChild(levelLabel)
+        
         /// DESCRIPTION logic:
-        descriptionLabel.position = CGPoint(x: -320, y: 480) // TopLeft
+        //descriptionLabel.labelWidth = Int(( self.frame.width / 3.0 ))
+        //descriptionLabel.preferredMaxLayoutWidth = self.frame.width / 3.0
+        descriptionLabel.preferredMaxLayoutWidth = 200
+        descriptionLabel.position = CGPoint(x: -200, y: 480) // TopLeft
         descriptionLabel.fontSize = 32.0
         descriptionLabel.fontColor = UIColor.white
         self.addChild(descriptionLabel)
@@ -135,7 +179,7 @@ class GameScene: SKScene {
         self.addChild(coinLabel)
         
         /// SYSTEMMESSAGE logic:
-        systemMessageLabel.position = CGPoint(x: self.frame.midX, y: self.frame.maxX) // CenterTop
+        systemMessageLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY) // CenterTop
         systemMessageLabel.fontSize = 32.0
         systemMessageLabel.fontColor = UIColor.white
         self.addChild(systemMessageLabel)
@@ -159,7 +203,7 @@ class GameScene: SKScene {
             // Is the touch in the same place?
             if button1.contains(touchLoc) {
                 
-                descriptionLabel.text = descriptions["Item key 1"]
+                descriptionLabel.text = descriptions["Item key 1"]!
                 
                 if coins >= 5 {
                     //tapCount += 1
@@ -178,10 +222,10 @@ class GameScene: SKScene {
 
             }
             if button2.contains(touchLoc) {
-                descriptionLabel.text = descriptions["Item key 2"]
+                descriptionLabel.text = descriptions["Item key 2"]!
             }
             if button3.contains(touchLoc) {
-                descriptionLabel.text = descriptions["Item key 3"]
+                descriptionLabel.text = descriptions["Item key 3"]!
             }
             
         }
@@ -191,5 +235,11 @@ class GameScene: SKScene {
         timeLabel.text = "\(timeCount)"
         //tapLabel.text = "$\(tapCount)"
         coinLabel.text = "$\(coins)"
+        levelLabel.text = "\(currentLevel)"
+        
+        // Level up checker, temporary for debugging and testing:
+        if coins < 130 {
+            checkIfLevelUp()
+        }
     }
 }
