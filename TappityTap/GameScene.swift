@@ -27,6 +27,8 @@ class GameScene: SKScene {
     var timeCount: Int = 0
     let descriptionLabel = SKLabelNode()
     var descriptions = [String:String]()
+    
+    var currentLevel: Int = 0
     /* Decision-making structures -> Choices:
      - Generate $+ when away
      - Generate $+ from own taps
@@ -43,7 +45,8 @@ class GameScene: SKScene {
         Debugger.debug(active: false, message: "Bounds Size", item: view?.bounds.size) // Bounds size: Optional((320.0, 480.0))
         
         descriptions = Constants.descriptions
-        //tapCount = 0
+        //tapCount =0
+        currentLevel = 0
         timeCount = 0
         coins = 100
         buttonLabel1.text = "Tap me 1!"
@@ -52,7 +55,7 @@ class GameScene: SKScene {
         //tapLabel.text = "\(tapCount)"
         coinLabel.text = "$\(coins)"
         timeLabel.text = "\(timeCount)"
-        descriptionLabel.text = "Description: \n"
+        descriptionLabel.text = ""
         
         systemMessageLabel.isHidden = true
         systemMessageLabel.text = ""
@@ -85,34 +88,46 @@ class GameScene: SKScene {
         /// BUTTON 1 logic - Sprite node that will act as a button:
         button1 = SKSpriteNode(color: UIColor.systemRed, size: CGSize(width: 100.00, height: 44.00))
         button1.position = CGPoint(x: -320, y: -320) // BottomLeft
+        button1.zPosition = 1
         self.addChild(button1)
         
         /// BUTTON 2 logic - Sprite node that will act as a button:
         button2 = SKSpriteNode(color: UIColor.systemBlue, size: CGSize(width: 100.00, height: 44.00))
         button2.position = CGPoint(x: 0, y: -320) // BottomCenter
+        button2.zPosition = 1
         self.addChild(button2)
         
         /// BUTTON 3 logic - Sprite node that will act as a button:
         button3 = SKSpriteNode(color: UIColor.systemGreen, size: CGSize(width: 100.00, height: 44.00))
         button3.position = CGPoint(x: 320, y: -320) // BottomRight
+        button3.zPosition = 1
         self.addChild(button3)
         
         /// BUTTON 1 TEXT
-        buttonLabel1.position = CGPoint(x: button1.frame.midX, y: button1.frame.midY)
-        buttonLabel1.fontSize = 32.0
-        buttonLabel1.fontColor = UIColor.black
+        //buttonLabel1.position = CGPoint(x: button1.frame.midX, y: button1.frame.midY)
+        buttonLabel1.verticalAlignmentMode = .center
+        buttonLabel1.horizontalAlignmentMode = .center
+        buttonLabel1.zPosition = 2
+        buttonLabel1.fontSize = 20.0
+        buttonLabel1.fontColor = UIColor.white
         button1.addChild(buttonLabel1)
         
         /// BUTTON 2 TEXT
-        buttonLabel2.position = CGPoint(x: button2.frame.midX, y: button2.frame.midY)
-        buttonLabel2.fontSize = 32.0
-        buttonLabel2.fontColor = UIColor.black
+        //buttonLabel2.position = CGPoint(x: button2.frame.midX, y: button2.frame.midY)
+        buttonLabel2.verticalAlignmentMode = .center
+        buttonLabel2.horizontalAlignmentMode = .center
+        buttonLabel2.zPosition = 2
+        buttonLabel2.fontSize = 20.0
+        buttonLabel2.fontColor = UIColor.white
         button2.addChild(buttonLabel2)
         
         /// BUTTON 3 TEXT
-        buttonLabel3.position = CGPoint(x: button3.frame.midX, y: button3.frame.midY)
-        buttonLabel3.fontSize = 32.0
-        buttonLabel3.fontColor = UIColor.black
+        //buttonLabel3.position = CGPoint(x: button3.frame.midX, y: button3.frame.midY)
+        buttonLabel3.verticalAlignmentMode = .center
+        buttonLabel3.horizontalAlignmentMode = .center
+        buttonLabel3.zPosition = 2
+        buttonLabel3.fontSize = 20.0
+        buttonLabel3.fontColor = UIColor.white
         button3.addChild(buttonLabel3)
         
         /// TAP Label logic:
@@ -135,7 +150,7 @@ class GameScene: SKScene {
         self.addChild(coinLabel)
         
         /// SYSTEMMESSAGE logic:
-        systemMessageLabel.position = CGPoint(x: self.frame.midX, y: self.frame.maxX) // CenterTop
+        systemMessageLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY) // CenterTop
         systemMessageLabel.fontSize = 32.0
         systemMessageLabel.fontColor = UIColor.white
         self.addChild(systemMessageLabel)
