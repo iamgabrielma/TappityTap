@@ -25,6 +25,9 @@ class GameScene: SKScene {
     var coins: Int = 0
     //var tapCount: Int = 0
     var timeCount: Int = 0
+    #warning("SKMultilineLabel class does not allow to init the game")
+    // SpriteKit SKLabels do not accept multiline strings. Substituting SKLabel for SKMultilineLabel: https://gist.github.com/craiggrummitt/03bfa93c07e247ee9358
+    //let descriptionLabel: SKMultilineLabel = SKMultilineLabel(text:"", labelWidth: 0, pos: CGPoint(x: 0, y: 0))
     let descriptionLabel = SKLabelNode()
     var descriptions = [String:String]()
     
@@ -55,10 +58,16 @@ class GameScene: SKScene {
         //tapLabel.text = "\(tapCount)"
         coinLabel.text = "$\(coins)"
         timeLabel.text = "\(timeCount)"
-        descriptionLabel.text = ""
+        
+        descriptionLabel.lineBreakMode = .byWordWrapping
         
         systemMessageLabel.isHidden = true
         systemMessageLabel.text = ""
+        
+        // MultiLineLabel:
+        //descriptionLabel.text = "Level: 0 \nDescription: Lorem Ipsum "
+        //descriptionLabel.labelWidth = Int(( self.frame.width / 3.0 ))
+        
         
         startTimer()
         
@@ -138,7 +147,10 @@ class GameScene: SKScene {
 //        self.addChild(tapLabel)
         
         /// DESCRIPTION logic:
-        descriptionLabel.position = CGPoint(x: -320, y: 480) // TopLeft
+        //descriptionLabel.labelWidth = Int(( self.frame.width / 3.0 ))
+        //descriptionLabel.preferredMaxLayoutWidth = self.frame.width / 3.0
+        descriptionLabel.preferredMaxLayoutWidth = 200
+        descriptionLabel.position = CGPoint(x: -200, y: 480) // TopLeft
         descriptionLabel.fontSize = 32.0
         descriptionLabel.fontColor = UIColor.white
         self.addChild(descriptionLabel)
@@ -174,7 +186,7 @@ class GameScene: SKScene {
             // Is the touch in the same place?
             if button1.contains(touchLoc) {
                 
-                descriptionLabel.text = descriptions["Item key 1"]
+                descriptionLabel.text = descriptions["Item key 1"]!
                 
                 if coins >= 5 {
                     //tapCount += 1
@@ -193,10 +205,10 @@ class GameScene: SKScene {
 
             }
             if button2.contains(touchLoc) {
-                descriptionLabel.text = descriptions["Item key 2"]
+                descriptionLabel.text = descriptions["Item key 2"]!
             }
             if button3.contains(touchLoc) {
-                descriptionLabel.text = descriptions["Item key 3"]
+                descriptionLabel.text = descriptions["Item key 3"]!
             }
             
         }
