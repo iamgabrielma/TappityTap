@@ -14,11 +14,11 @@ class GameScene: SKScene {
     var button = SKNode()
     let buttonLabel = SKLabelNode()
     let coinLabel = SKLabelNode()
-    let tapLabel = SKLabelNode()
+    //let tapLabel = SKLabelNode()
     var systemMessageLabel = SKLabelNode()
     var timeLabel = SKLabelNode()
     var coins: Int = 0
-    var tapCount: Int = 0
+    //var tapCount: Int = 0
     var timeCount: Int = 0
     /* Decision-making structures -> Choices:
      - Generate $+ when away
@@ -35,11 +35,11 @@ class GameScene: SKScene {
         Debugger.debug(active: false, message: "Frame Size", item: view?.frame.size) // Frame size: Optional((320.0, 480.0))
         Debugger.debug(active: false, message: "Bounds Size", item: view?.bounds.size) // Bounds size: Optional((320.0, 480.0))
         
-        tapCount = 0
+        //tapCount = 0
         timeCount = 0
         coins = 100
         buttonLabel.text = "Tap me!"
-        tapLabel.text = "\(tapCount)"
+        //tapLabel.text = "\(tapCount)"
         coinLabel.text = "$\(coins)"
         timeLabel.text = "\(timeCount)"
         
@@ -61,7 +61,8 @@ class GameScene: SKScene {
     
     func counter(){
         timeCount += 1 // +1 second every second
-        tapCount += 1 // +1 automatic tap every second
+        //tapCount += 1 // +1 automatic tap every second
+        coins += 1 // +1 coin every second
         // DEBUG
         //print(timeCount)
     }
@@ -73,20 +74,21 @@ class GameScene: SKScene {
         button = SKSpriteNode(color: UIColor.systemRed, size: CGSize(width: 100.00, height: 44.00))
         button.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         self.addChild(button)
-        
-        buttonLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY) // CenterCenter
+        /// BUTTON TEXT
+        buttonLabel.position = CGPoint(x: button.frame.midX, y: button.frame.midY) // CenterCenter
         buttonLabel.fontSize = 32.0
-        buttonLabel.fontColor = UIColor.white
-        self.addChild(buttonLabel)
+        buttonLabel.fontColor = UIColor.black
+        button.addChild(buttonLabel)
         
         /// TAP Label logic:
-        tapLabel.position = CGPoint(x: self.frame.midX, y: self.frame.maxX) // TopCenter
-        tapLabel.fontSize = 72.0
-        tapLabel.fontColor = UIColor.white
-        self.addChild(tapLabel)
+        /// This is invisible at the moment, no need to show. Just sum the value to the total coin.
+//        tapLabel.position = CGPoint(x: self.frame.midX, y: self.frame.maxX) // TopCenter
+//        tapLabel.fontSize = 72.0
+//        tapLabel.fontColor = UIColor.white
+//        self.addChild(tapLabel)
         
         /// COINS logic:
-        coinLabel.position = CGPoint(x: self.frame.midX, y: self.frame.minX) // BottomCenter
+        coinLabel.position = CGPoint(x: (320 - 50), y: 480) // TopRight
         coinLabel.fontSize = 72.0
         coinLabel.fontColor = UIColor.white
         self.addChild(coinLabel)
@@ -117,10 +119,10 @@ class GameScene: SKScene {
             if button.contains(touchLoc) {
                 
                 if coins >= 5 {
-                    tapCount += 1
+                    //tapCount += 1
                     //coins -= 5 // Removing this for the moment, tapping doesn't cost coins but the opposite:
                     coins += 1
-                    tapLabel.text = "\(tapCount)"
+                    //tapLabel.text = "\(tapCount)"
                     coinLabel.text = "$\(coins)"
                     // Debug:
                     //print(count)
@@ -138,6 +140,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         timeLabel.text = "\(timeCount)"
-        tapLabel.text = "\(tapCount)"
+        //tapLabel.text = "$\(tapCount)"
+        coinLabel.text = "$\(coins)"
     }
 }
