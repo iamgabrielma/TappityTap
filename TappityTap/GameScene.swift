@@ -31,6 +31,7 @@ class GameScene: SKScene {
     let descriptionLabel = SKLabelNode()
     var descriptions = [String:String]()
     
+    let levelLabel = SKLabelNode()
     var currentLevel: Int = 0
     /* Decision-making structures -> Choices:
      - Generate $+ when away
@@ -58,6 +59,7 @@ class GameScene: SKScene {
         //tapLabel.text = "\(tapCount)"
         coinLabel.text = "$\(coins)"
         timeLabel.text = "\(timeCount)"
+        levelLabel.text = "Level: \(currentLevel)"
         
         descriptionLabel.lineBreakMode = .byWordWrapping
         
@@ -88,6 +90,15 @@ class GameScene: SKScene {
         coins += 1 // +1 coin every second
         // DEBUG
         //print(timeCount)
+    }
+    
+    func checkIfLevelUp(){
+        // Work in progress - Quick level up logic for debugging:
+        if coins >= 110 && coins < 111 {
+            currentLevel += 1
+        } else if coins >= 120 && coins < 121 {
+            currentLevel += 1
+        }
     }
     
     override func didMove(to view: SKView) {
@@ -145,6 +156,12 @@ class GameScene: SKScene {
 //        tapLabel.fontSize = 72.0
 //        tapLabel.fontColor = UIColor.white
 //        self.addChild(tapLabel)
+        
+        /// LEVEL:
+        levelLabel.position = CGPoint(x: -200, y: 300) // Positioning here needs fixing, attached to label better
+        levelLabel.fontSize = 20.0
+        levelLabel.fontColor = UIColor.white
+        self.addChild(levelLabel)
         
         /// DESCRIPTION logic:
         //descriptionLabel.labelWidth = Int(( self.frame.width / 3.0 ))
@@ -218,5 +235,11 @@ class GameScene: SKScene {
         timeLabel.text = "\(timeCount)"
         //tapLabel.text = "$\(tapCount)"
         coinLabel.text = "$\(coins)"
+        levelLabel.text = "\(currentLevel)"
+        
+        // Level up checker, temporary for debugging and testing:
+        if coins < 130 {
+            checkIfLevelUp()
+        }
     }
 }
