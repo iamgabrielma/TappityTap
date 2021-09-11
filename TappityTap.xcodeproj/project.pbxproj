@@ -19,6 +19,7 @@
 		6881873326EB4BB5004F3CBF /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881873226EB4BB4004F3CBF /* Debugger.swift */; };
 		6881873526EBBE28004F3CBF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881873426EBBE28004F3CBF /* Constants.swift */; };
 		6881873726EBCF0B004F3CBF /* SKMultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6881873626EBCF0B004F3CBF /* SKMultilineLabel.swift */; };
+		6881873B26ED43FD004F3CBF /* LLPIXEL3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6881873A26ED43FD004F3CBF /* LLPIXEL3.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		6881873226EB4BB4004F3CBF /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		6881873426EBBE28004F3CBF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6881873626EBCF0B004F3CBF /* SKMultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKMultilineLabel.swift; sourceTree = "<group>"; };
+		6881873A26ED43FD004F3CBF /* LLPIXEL3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LLPIXEL3.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		6881870026EA3A0B004F3CBF /* TappityTap */ = {
 			isa = PBXGroup;
 			children = (
+				6881873A26ED43FD004F3CBF /* LLPIXEL3.ttf */,
 				6881870126EA3A0B004F3CBF /* AppDelegate.swift */,
 				6881870326EA3A0B004F3CBF /* GameScene.sks */,
 				6881870526EA3A0B004F3CBF /* Actions.sks */,
@@ -244,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6881870D26EA3A0B004F3CBF /* Main.storyboard in Resources */,
+				6881873B26ED43FD004F3CBF /* LLPIXEL3.ttf in Resources */,
 				6881870426EA3A0B004F3CBF /* GameScene.sks in Resources */,
 				6881870F26EA3A0F004F3CBF /* Assets.xcassets in Resources */,
 				6881870626EA3A0B004F3CBF /* Actions.sks in Resources */,

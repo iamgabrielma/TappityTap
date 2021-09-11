@@ -9,9 +9,11 @@ import Foundation
 
 class Constants {
     
+    static let fontPixel = "LLPIXEL3"
+    
     static let descriptions: [String:String] = [
-        "Item key 1" : "Item value description 1",
-        "Item key 2" : "Item value description 2",
-        "Item key 3" : "Item value description 3"
+        "Item key 1" : "Tapped!",
+        "Item key 2" : "Opens Ugrade Mod",
+        "Item key 3" : "Opens Automations Mod"
     ]
 }
